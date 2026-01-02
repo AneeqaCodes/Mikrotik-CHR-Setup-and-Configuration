@@ -1,0 +1,16 @@
+- name: Configure RADIUS on MikroTik CHR
+  hosts: mikrotik
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: Add RADIUS server for Hotspot
+      community.routeros.command:
+        commands:
+          - /radius add address=35.227.71.209 secret=testing123 service=hotspot
+
+    - name: Print RADIUS configuration
+      community.routeros.command:
+        commands:
+          - /radius print
+      register: radius_output
